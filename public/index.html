@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <title>Cosmos.so Image Downloader</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- JSZip pro klientské generování ZIP archivu se všemi obrázky -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- 1. Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <div class="brand">
+          <div class="brand-icon">🪐</div>
+          <div>
+            <h1>Cosmos.so Image Downloader</h1>
+            <p>Vyhledávání a stahování obrázků z platformy cosmos.so</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button id="viewRawBtn" class="btn btn-secondary" disabled>📄 Odpověď serveru</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 2. Search Section -->
+    <section class="search-section">
+      <form id="searchForm" class="search-form">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input
+            type="text"
+            id="searchInput"
+            placeholder="Zadejte hledaný termín (např. typography, architecture, minimal, flower)..."
+            autocomplete="off"
+            required
+          />
+          <button type="button" id="clearBtn" class="clear-btn" title="Vymazat">✕</button>
+        </div>
+        <button type="submit" id="searchBtn" class="btn btn-primary">
+          <span>Vyhledat</span>
+        </button>
+      </form>
+    </section>
+
+    <!-- 3. Toolbar -->
+    <section class="toolbar-section">
+      <div class="toolbar-stats">
+        <span>Nalezené obrázky:</span>
+        <span id="countBadge" class="count-badge">0</span>
+        <span id="subCountText" class="sub-count-text"></span>
+      </div>
+
+      <div class="toolbar-actions">
+        <label class="checkbox-label">
+          <input type="checkbox" id="autoScrollCheck" checked>
+          <span>Auto načítání při scrollování</span>
+        </label>
+        <button id="downloadAllBtn" class="btn btn-success" disabled>
+          <span>📥 Stáhnout vše (ZIP)</span>
+        </button>
+        <button id="copyAllUrlsBtn" class="btn btn-secondary" disabled>
+          <span>📋 Kopírovat URL</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ZIP Download Progress Banner -->
+    <div id="zipProgressBanner" class="zip-progress-banner hidden">
+      <div class="progress-info">
+        <span id="zipProgressText">Stahuji obrázky do ZIP archivu...</span>
+        <span id="zipProgressPercent">0%</span>
+      </div>
+      <div class="progress-track">
+        <div id="zipProgressBar" class="progress-fill" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <!-- 4. Main Gallery Area -->
+    <main class="gallery-section">
+      <!-- Empty State -->
+      <div id="emptyState" class="empty-state">
+        <div class="empty-icon">🖼️</div>
+        <h2>Zatím nebylo provedeno žádné vyhledávání</h2>
+        <p>Zadejte hledaný výraz do pole výše a stiskněte Enter nebo klikněte na Vyhledat. Aplikace načte obrázky přes Cosmos GraphQL API s podporou průběžného stránkování.</p>
+      </div>
+
+      <!-- Loading State -->
+      <div id="initialLoading" class="loading-state hidden">
+        <div class="spinner"></div>
+        <p id="loadingStatusText">Vyhledávám obrázky na Cosmos.so...</p>
+      </div>
+
+      <!-- Image Grid -->
+      <div id="imageGrid" class="image-grid hidden"></div>
+
+      <!-- Load More / Infinite Scroll Section -->
+      <div id="loadMoreSection" class="load-more-section hidden">
+        <button id="loadMoreBtn" class="btn btn-primary btn-large">
+          <span>⬇ Načíst dalších 40 obrázků</span>
+        </button>
+        <div id="loadMoreSpinner" class="spinner-small hidden"></div>
+        <p id="loadMoreStatus" class="load-more-status"></p>
+      </div>
+    </main>
+
+    <!-- Footer Status Bar -->
+    <footer class="status-bar">
+      <div id="statusBarText">Připraveno k vyhledávání.</div>
+    </footer>
+  </div>
+
+  <!-- Fullscreen Lightbox / Modal -->
+  <div id="lightboxModal" class="modal hidden">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3 id="modalTitle">Název obrázku</h3>
+          <span id="modalDimensions" class="modal-badge"></span>
+        </div>
+        <div class="modal-actions">
+          <a id="modalDirectDownload" href="#" class="btn btn-success" download>💾 Stáhnout</a>
+          <button id="modalCopyUrl" class="btn btn-secondary">📋 Kopírovat URL</button>
+          <button id="modalCloseBtn" class="modal-close-btn" title="Zavřít (Esc)">✕</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <img id="modalImage" src="" alt="Detail obrázku" />
+      </div>
+      <div class="modal-footer">
+        <a id="modalOriginalLink" href="#" target="_blank" rel="noopener noreferrer">🔗 Otevřít původní URL</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Raw Response Viewer Modal -->
+  <div id="rawModal" class="modal hidden">
+    <div class="modal-backdrop" id="rawModalBackdrop"></div>
+    <div class="modal-container raw-modal-container">
+      <div class="modal-header">
+        <h3>Zdrojová odpověď serveru Cosmos (GraphQL JSON)</h3>
+        <button id="rawModalCloseBtn" class="modal-close-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <pre id="rawContent">Žádná data</pre>
+      </div>
+      <div class="modal-footer">
+        <button id="copyRawBtn" class="btn btn-primary">📋 Kopírovat JSON</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

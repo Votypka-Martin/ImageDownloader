@@ -1,0 +1,14 @@
+{
+  "name": "cosmos-image-downloader-web",
+  "version": "1.0.0",
+  "description": "Webová verze Cosmos.so Image Downloader pro Vercel",
+  "type": "module",
+  "main": "dev-server.js",
+  "scripts": {
+    "start": "node dev-server.js",
+    "dev": "node dev-server.js"
+  },
+  "keywords": ["cosmos", "image-downloader", "scraper", "vercel"],
+  "author": "",
+  "license": "MIT"
+}
