@@ -239,11 +239,11 @@ function createCardElement(item) {
       <a href="/api/image?url=${encodeURIComponent(item.url)}&download=1&filename=${encodeURIComponent(item.fileName)}"
          class="btn btn-success btn-sm btn-download"
          title="Stáhnout do PC">
-        💾 Uložit
+        Uložit
       </a>
-      <button class="btn btn-secondary btn-sm btn-zoom" title="Zvětšit náhled">🔍</button>
-      <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" title="Otevřít v novém okně">🔗</a>
-      <button class="btn btn-secondary btn-sm btn-copy" title="Kopírovat URL">📋</button>
+      <button class="btn btn-secondary btn-sm btn-zoom" title="Zvětšit náhled">Náhled</button>
+      <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="btn btn-secondary btn-sm" title="Otevřít v novém okně">Web</a>
+      <button class="btn btn-secondary btn-sm btn-copy" title="Kopírovat URL">Kopírovat</button>
     </div>
   `;
 
@@ -318,7 +318,7 @@ function updatePaginationUI() {
     if (loadedItems.length > 0) {
       loadMoreSection.classList.remove('hidden');
       loadMoreBtn.disabled = true;
-      loadMoreBtn.querySelector('span').textContent = '✓ Všechny dostupné obrázky načteny';
+      loadMoreBtn.querySelector('span').textContent = 'Všechny dostupné obrázky načteny';
       loadMoreStatus.textContent = `Načteno všech ${loadedItems.length} výsledků.`;
     } else {
       loadMoreSection.classList.add('hidden');

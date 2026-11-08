@@ -1,7 +1,7 @@
 {
   "name": "cosmos-image-downloader-web",
   "version": "1.0.0",
-  "description": "Webová verze Cosmos.so Image Downloader pro Vercel",
+  "description": "Web version of Cosmos.so Image Downloader for educational purposes and Vercel deployment",
   "type": "module",
   "main": "dev-server.js",
   "scripts": {

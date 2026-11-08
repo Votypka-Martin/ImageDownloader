@@ -15,14 +15,14 @@
     <header class="app-header">
       <div class="header-content">
         <div class="brand">
-          <div class="brand-icon">🪐</div>
+          <div class="brand-icon">C</div>
           <div>
             <h1>Cosmos.so Image Downloader</h1>
             <p>Vyhledávání a stahování obrázků z platformy cosmos.so</p>
           </div>
         </div>
         <div class="header-actions">
-          <button id="viewRawBtn" class="btn btn-secondary" disabled>📄 Odpověď serveru</button>
+          <button id="viewRawBtn" class="btn btn-secondary" disabled>Odpověď serveru</button>
         </div>
       </div>
     </header>
@@ -31,7 +31,6 @@
     <section class="search-section">
       <form id="searchForm" class="search-form">
         <div class="search-input-wrapper">
-          <span class="search-icon">🔍</span>
           <input
             type="text"
             id="searchInput"
@@ -39,7 +38,7 @@
             autocomplete="off"
             required
           />
-          <button type="button" id="clearBtn" class="clear-btn" title="Vymazat">✕</button>
+          <button type="button" id="clearBtn" class="clear-btn" title="Vymazat">x</button>
         </div>
         <button type="submit" id="searchBtn" class="btn btn-primary">
           <span>Vyhledat</span>
@@ -61,10 +60,10 @@
           <span>Auto načítání při scrollování</span>
         </label>
         <button id="downloadAllBtn" class="btn btn-success" disabled>
-          <span>📥 Stáhnout vše (ZIP)</span>
+          <span>Stáhnout vše (ZIP)</span>
         </button>
         <button id="copyAllUrlsBtn" class="btn btn-secondary" disabled>
-          <span>📋 Kopírovat URL</span>
+          <span>Kopírovat URL</span>
         </button>
       </div>
     </section>
@@ -84,7 +83,6 @@
     <main class="gallery-section">
       <!-- Empty State -->
       <div id="emptyState" class="empty-state">
-        <div class="empty-icon">🖼️</div>
         <h2>Zatím nebylo provedeno žádné vyhledávání</h2>
         <p>Zadejte hledaný výraz do pole výše a stiskněte Enter nebo klikněte na Vyhledat. Aplikace načte obrázky přes Cosmos GraphQL API s podporou průběžného stránkování.</p>
       </div>
@@ -101,7 +99,7 @@
       <!-- Load More / Infinite Scroll Section -->
       <div id="loadMoreSection" class="load-more-section hidden">
         <button id="loadMoreBtn" class="btn btn-primary btn-large">
-          <span>⬇ Načíst dalších 40 obrázků</span>
+          <span>Načíst dalších 40 obrázků</span>
         </button>
         <div id="loadMoreSpinner" class="spinner-small hidden"></div>
         <p id="loadMoreStatus" class="load-more-status"></p>
@@ -124,16 +122,16 @@
           <span id="modalDimensions" class="modal-badge"></span>
         </div>
         <div class="modal-actions">
-          <a id="modalDirectDownload" href="#" class="btn btn-success" download>💾 Stáhnout</a>
-          <button id="modalCopyUrl" class="btn btn-secondary">📋 Kopírovat URL</button>
-          <button id="modalCloseBtn" class="modal-close-btn" title="Zavřít (Esc)">✕</button>
+          <a id="modalDirectDownload" href="#" class="btn btn-success" download>Stáhnout</a>
+          <button id="modalCopyUrl" class="btn btn-secondary">Kopírovat URL</button>
+          <button id="modalCloseBtn" class="modal-close-btn" title="Zavřít (Esc)">x</button>
         </div>
       </div>
       <div class="modal-body">
         <img id="modalImage" src="" alt="Detail obrázku" />
       </div>
       <div class="modal-footer">
-        <a id="modalOriginalLink" href="#" target="_blank" rel="noopener noreferrer">🔗 Otevřít původní URL</a>
+        <a id="modalOriginalLink" href="#" target="_blank" rel="noopener noreferrer">Otevřít původní URL</a>
       </div>
     </div>
   </div>
@@ -144,13 +142,13 @@
     <div class="modal-container raw-modal-container">
       <div class="modal-header">
         <h3>Zdrojová odpověď serveru Cosmos (GraphQL JSON)</h3>
-        <button id="rawModalCloseBtn" class="modal-close-btn">✕</button>
+        <button id="rawModalCloseBtn" class="modal-close-btn">x</button>
       </div>
       <div class="modal-body">
         <pre id="rawContent">Žádná data</pre>
       </div>
       <div class="modal-footer">
-        <button id="copyRawBtn" class="btn btn-primary">📋 Kopírovat JSON</button>
+        <button id="copyRawBtn" class="btn btn-primary">Kopírovat JSON</button>
       </div>
     </div>
   </div>

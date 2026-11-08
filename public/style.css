@@ -61,7 +61,9 @@ body {
 }
 
 .brand-icon {
-  font-size: 26px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
   background: var(--primary);
   width: 44px;
   height: 44px;

@@ -131,7 +131,7 @@ const server = http.createServer(async (req, res) => {
 
 server.listen(PORT, () => {
   console.log(`========================================================`);
-  console.log(`🪐 Cosmos Image Downloader Web Server běží na:`);
-  console.log(`👉 http://localhost:${PORT}`);
+  console.log(`Cosmos Image Downloader Web Server running at:`);
+  console.log(`http://localhost:${PORT}`);
   console.log(`========================================================`);
 });

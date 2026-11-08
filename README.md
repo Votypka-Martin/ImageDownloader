@@ -1,61 +1,55 @@
-# 🪐 Cosmos.so Image Downloader – Webová verze (Vercel)
+# Cosmos Image Downloader - Web Version (Node.js & Vercel)
 
-Webová aplikace pro vyhledávání, plynulé prohlížení a stahování obrázků ze stránek [cosmos.so](https://www.cosmos.so/) s plnou podporou nasazení na **Vercel**.
-
----
-
-## 🌟 Funkce
-
-* **Bypass CORS přes lehký backend (Serverless API)**:
-  * Dotazy na `https://api.cosmos.so/graphql` se provádí ze serverless funkce `/api/search` se všemi potřebnými hlavičkami.
-* **Průběžné stránkování (Infinite scroll)**:
-  * Při scrollování dolů se automaticky načítá dalších 40 obrázků pomocí kurzoru `nextPageCursor`.
-  * Tlačítko pro ruční načtení dalších dávek s indikátorem postupu.
-* **Hromadné stažení jako ZIP**:
-  * Přímo v prohlížeči generuje `.zip` archiv všech načtených obrázků pomocí `JSZip` a proxy endpointu `/api/image`.
-* **Detailní náhled (Lightbox)**:
-  * Zobrazení v plném rozlišení, rozměry (`šířka × výška px`), přímé stažení, kopírování URL.
-* **Inspekce surové odpovědi**:
-  * Tlačítko `📄 Odpověď serveru` zobrazí kompletní GraphQL JSON odpověď.
+A lightweight web application for searching, previewing, and downloading images from [cosmos.so](https://www.cosmos.so/), designed for local development and seamless deployment to Vercel.
 
 ---
 
-## 🚀 Lokální spuštění
+## Educational Purpose
 
-Aplikace nevyžaduje žádnou instalaci externích balíčků (`npm install` není potřeba!), běží přímo na nativním Node.js:
+This application is created strictly for educational purposes to demonstrate how to interact with modern GraphQL endpoints and handle CORS via serverless functions, enabling users to access inspiration images from cosmos.so without requiring account creation.
 
-1. Otevřete terminál ve složce `web`:
+---
+
+## Features
+
+- Serverless API Proxy: Queries `https://api.cosmos.so/graphql` via `/api/search` with the required browser headers to bypass CORS limitations.
+- Continuous Pagination: Automatically requests the next batch of images as the user reaches the bottom of the page.
+- Client-side ZIP Download: Generates a single `.zip` file containing all loaded images directly in the browser via JSZip and `/api/image`.
+- Lightbox Modal: Full-resolution image viewer with dimension indicators and quick actions.
+- Zero npm Runtime Dependencies: The local development server (`dev-server.js`) uses native Node.js standard libraries (`http`, `fs`, `path`, native `fetch`). No `npm install` needed.
+- Raw Response Viewer: Inspect raw JSON data returned by the backend API.
+- Clean Interface: Clean, professional UI without unicode icon clutter.
+
+---
+
+## Local Development
+
+1. Open your terminal in the `web` folder:
    ```bash
    cd web
    ```
 
-2. Spusťte lokální server:
+2. Start the local server:
    ```bash
-   npm start
-   # nebo přímo:
    node dev-server.js
    ```
 
-3. Otevřete prohlížeč na adrese:
-   👉 **http://localhost:3000**
+3. Open your browser at:
+   `http://localhost:3000`
 
 ---
 
-## ☁️ Nasazení na Vercel
+## Deployment to Vercel
 
-Projekt je připraven pro okamžité nasazení na Vercel (1 kliknutím z GitHubu):
+### Option 1: GitHub Integration (Recommended)
+1. Push your repository to GitHub.
+2. Sign in to [vercel.com](https://vercel.com).
+3. Click "Add New..." -> "Project".
+4. Select your repository.
+5. Set the "Root Directory" to `web`.
+6. Click "Deploy".
 
-### Možnost 1: Přes GitHub (Doporučeno)
-1. Nahrajte projekt na svůj GitHub repozitář.
-2. Přejděte na [vercel.com](https://vercel.com) a přihlaste se.
-3. Klikněte na **Add New...** -> **Project**.
-4. Vyberte váš repozitář.
-5. Jako **Root Directory** nastavte složku `web`.
-6. Klikněte na **Deploy**.
-
-Vercel automaticky nasadí serverless funkce z `/api` a statický frontend z `/public`.
-
-### Možnost 2: Přes Vercel CLI
+### Option 2: Vercel CLI
 ```bash
 cd web
 npm i -g vercel
